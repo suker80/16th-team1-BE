@@ -38,6 +38,10 @@ public class CustomResponse<T> {
     return ResponseEntity.ok(new CustomResponse<>(result));
   }
 
+  public static <T> CustomResponse<T> ok(T result) {
+    return new CustomResponse<>(result);
+  }
+
   public static <T> ResponseEntity<CustomResponse<T>> okResponseEntity() {
     return ResponseEntity.ok(new CustomResponse<>());
   }

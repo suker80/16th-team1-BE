@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,7 +43,7 @@ public class FeedbackCommandController {
 
   @Operation(summary = "포트폴리오 응답 가져오기", description = "포트폴리오 피드백을 feedback id로 가져오기")
   @GetMapping("")
-  public ResponseEntity<CustomResponse<Feedback>> getFeedbackDetail(
+  public CustomResponse<Feedback> getFeedbackDetail(
       @Parameter(example = "66e516c2b355355088f07c82")
           @RequestParam(defaultValue = "66e516c2b355355088f07c82")
           ObjectId feedbackId) {
@@ -88,13 +87,13 @@ public class FeedbackCommandController {
             overallEvaluation,
             new ArrayList<>(),
             projectEvaluation);
-    return CustomResponse.okResponseEntity(feedback);
+    return CustomResponse.ok(feedback);
   }
 
   @Operation(summary = "최근 포폴 피드백 목록", description = "최근 피드백 목록 기본 날짜정렬 ")
   @GetMapping("/recent")
-  public ResponseEntity<CustomResponse<List<RecentFeedbackListResponse>>> recentFeedbackList() {
-    return CustomResponse.okResponseEntity(
+  public CustomResponse<List<RecentFeedbackListResponse>> recentFeedbackList() {
+    return CustomResponse.ok(
         List.of(
             new RecentFeedbackListResponse(
                 new ObjectId("66e516c2b355355088f07c82"), LocalDateTime.now(), "포폴 이름"),
@@ -106,7 +105,7 @@ public class FeedbackCommandController {
 
   @Operation(summary = "남은 피드백 횟수 조회", description = "남은 피드백 횟수 조회")
   @GetMapping("/remain")
-  public ResponseEntity<CustomResponse<RemainCountResponse>> getRemainCount() {
-    return CustomResponse.okResponseEntity(new RemainCountResponse(5));
+  public CustomResponse<RemainCountResponse> getRemainCount() {
+    return CustomResponse.ok(new RemainCountResponse(5));
   }
 }
